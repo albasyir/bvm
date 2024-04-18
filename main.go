@@ -1,22 +1,19 @@
 package main
 
 import (
-    "fmt"
-    "os"
+	"bvm/contract"
+	"bvm/core"
+	"fmt"
 )
 
 func main() {
-    // Check if there are enough arguments
-    if len(os.Args) < 2 {
-        fmt.Println("Usage: go run main.go [argument]")
-        os.Exit(1)
-    }
+	var driverInstance contract.Driver = core.NewBVM()
+	bvmDriver, created := driverInstance.(contract.Driver)
 
-    // Get the first command-line argument
-    argument := os.Args[1]
+	if !created {
+		fmt.Println("Failed to assert Driver Instance")
+		return
+	}
 
-	unix.SayHello()
-
-    // Print the argument
-    fmt.Println("Argument:", argument)
+	fmt.Println(bvmDriver.GetCurrentVersion())
 }
